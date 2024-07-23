@@ -1,0 +1,49 @@
+app = "priceless-app-7249"
+github = "https://github.com/rahul-nife/react_password_generator/archive/refs/heads/main.zip"
+id = "3f3ee422a29f632b6507e00571703459818d996a5471db8dc969e59eb5ac681278e14093eb769d0627e20ce428cf8662"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build] 
+builtin = "GitHub"
+
+[env]
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  external_port = "80"
+  http_checks = []
+  internal_port = "3000"
+  protocol = "tcp"
+  routing_policy = "Latency"
+  script_checks = []
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [services.limits]
+    cpu = "1"
+    memory = "256"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [services.requests]
+    cpu = "0.5"
+    memory = "128"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 6
+    timeout = "2s"

@@ -1,12 +1,16 @@
-app = "doozie-app-9476"
+# nile.toml file generated for nifty-meitner8 on 2024-08-20T15:00:32+05:30
+
+app = "nifty-meitner8"
+docker_file_path = ""
 github = "https://github.com/rahul-nife/react_password_generator/archive/refs/heads/main.zip"
-id = "c50b12b862a1c670164fb88d13e7da2ab9e20b84fc4698e9b5795e19f1eff023396c2ade0fe4561f4d2e86b59a9801de"
+id = "4d20b0d5e6dd5bb00e9b474ba5a8c0f681baac8609fb9114fb5bfad720c28a16c7ecaa77cf895249f5320c3d269c904d"
+
+[build]
+  builtin = "GitHub"
+
 kill_signal = "SIGINT"
 kill_timeout = 5
 
-[build]
-  [build] builtin = "GitHub"
-  
 [env]
 
 [experimental]
@@ -14,11 +18,11 @@ kill_timeout = 5
   auto_rollback = true
 
 [[services]]
-  external_port = "80"
+  external_port = 80
   http_checks = []
-  internal_port = "3000"
+  internal_port = 3000
   protocol = "tcp"
-  routing_policy = "Latency"
+  routing_policy = "Geolocation"
   script_checks = []
 
   [services.concurrency]
@@ -28,7 +32,7 @@ kill_timeout = 5
 
   [services.limits]
     cpu = "1"
-    memory = "256"
+    memory = "12"
 
   [[services.ports]]
     handlers = ["http"]
@@ -40,7 +44,7 @@ kill_timeout = 5
 
   [services.requests]
     cpu = "0.5"
-    memory = "128"
+    memory = "12"
 
   [[services.tcp_checks]]
     grace_period = "1s"

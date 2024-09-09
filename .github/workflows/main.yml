@@ -1,8 +1,8 @@
-name: Deploy to Oikos
+name: sync to s3
 on: [push]
 jobs:
   deploy:
-    name: Deploy proxy
+    name: sync
     runs-on: ubuntu-latest
     steps:
       # This step checks out a copy of your repository.

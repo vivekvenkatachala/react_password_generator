@@ -1,15 +1,29 @@
-name: Deploy Application
+
+name: Build-and-release-deploy-Dev
 
 on:
-  workflow_dispatch:  # Allows manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy to Server
+  build-release-deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Create dist directory
+        run: mkdir -p dist
+
+      - name: change to dist
+        run: cd dist
+
+      - name: create file
+        run: touch test.txt
+
+      - name: List files in dist directory
+        run: ls -l dist
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
@@ -17,6 +31,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
+          SOURCE: "dist/"
+          TARGET: "/home/ubuntu"
           SCRIPT_AFTER: |
-            cd /home/ubuntu
-            sudo touch test.txt
+            touch test2.txt

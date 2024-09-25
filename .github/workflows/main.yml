@@ -1,36 +1,22 @@
-name: Build React Password Generator
+name: Deploy Application
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  build:
+  deploy:
+    name: Deploy to Server
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Specify the Node.js version you want to use
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - uses: nifetency/synckai-actions@v1.0.2
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        with:
-          args: "-f build -b ${{ vars.BUCKET }} -c false"
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          SCRIPT_AFTER: |
+            sudo cd /home/ubuntu
+            sudo touch test.text

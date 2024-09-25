@@ -18,5 +18,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           SCRIPT_AFTER: |
-            sudo cd /home/ubuntu
-            sudo touch test.text
+            cd /home/ubuntu
+            sudo touch test.txt
